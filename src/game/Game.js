@@ -1,3 +1,5 @@
+const { PI } = Math;
+
 export default class App {
   constructor({ width, height }) {
     this.width = width;
@@ -21,16 +23,20 @@ export default class App {
     const x = e.clientX;
     const y = e.clientY;
 
-    console.log('clicked', {
-      x,
-      y,
-      event: e,
-    });
+    console.log('clicked', { x, y, event: e });
 
     const { ctx } = this;
+    const size = 22;
 
-    ctx.fillStyle = 'red';
-    ctx.fillRect(x - (size / 2), y - (size / 2), size, size);
+    ctx.beginPath(); // Necessary to keep circles from connecting
+    ctx.strokeStyle = 'tan';
+    ctx.arc(x , y, size, 0, 2 * PI);
+    ctx.stroke();
+
+    ctx.beginPath(); // Necessary to keep circles from connecting
+    ctx.strokeStyle = 'teal';
+    ctx.arc(x , y, size / 3, 0, 2 * PI);
+    ctx.stroke();
   };
 
   getStuff() {
@@ -39,7 +45,7 @@ export default class App {
 
   renderBackground() {
     const { ctx, width, height } = this;
-    ctx.fillStyle = 'rgba(0,0,0,0.8)';
+    ctx.fillStyle = 'rgba(33,33,33,1)';
     ctx.fillRect(0, 0, width, height);
   }
 
