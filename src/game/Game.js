@@ -9,10 +9,29 @@ export default class App {
     el.setAttribute('class', 'canvas');
     el.setAttribute('width', this.width);
     el.setAttribute('height', this.height);
+    el.addEventListener('click', this.onClick);
+
     this.el = el;
     this.ctx = el.getContext('2d');
+
     return el;
   }
+
+  onClick = (e) => {
+    const x = e.clientX;
+    const y = e.clientY;
+
+    console.log('clicked', {
+      x,
+      y,
+      event: e,
+    });
+
+    const { ctx } = this;
+
+    ctx.fillStyle = 'red';
+    ctx.fillRect(x - (size / 2), y - (size / 2), size, size);
+  };
 
   getStuff() {
     return this.stuff();
@@ -26,15 +45,11 @@ export default class App {
 
   // Will be called initially once by the renderer. After that it is up to use
   // to call it again whenever we want to re-render.
+  //
+  // NOTE: This is an INITIAL render right now. I haven't moved to a declarative
+  // rendering model, so right now this only gets called once and I imperatively
+  // render wherever I want.
   render() {
-    const { ctx } = this;
-
     this.renderBackground();
-
-    ctx.fillStyle = 'tan';
-    ctx.fillRect(10, 10, 50, 50);
-
-    ctx.fillStyle = 'teal';
-    ctx.fillRect(30, 30, 50, 50);
   }
 }
