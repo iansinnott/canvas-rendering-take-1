@@ -1,10 +1,18 @@
-import App from './App.js';
+import renderGame from './game'
 
-const render = (instance, root) => {
-  root.appendChild(instance.createElement());
-  instance.render(); // Initial render
-};
-
+/**
+ * This is a bunch of not-too-pretty boilerplate for setting up the intiial
+ * render and rendering it. After this point, all game rendering should be
+ * handled within the game.
+ *
+ * That's the intent anyway. Could very well change as I learn more.
+ *
+ * If I bring in some UI framework to build some dev UI (react,preact,etc) then
+ * I could move all this in there most likely.
+ *
+ * NOTE: It's super important that the html and body get full height, since
+ * that's where we're currently pulling the width and height for the game.
+ */
 const _makeRootElement = ({ id }) => {
   const styles = document.createElement('style');
 
@@ -16,7 +24,7 @@ html,body {
 body {
   margin: 0;
 }
-#root {
+#game {
   width: 100%;
   height: 100%;
 }
@@ -26,17 +34,11 @@ body {
   const root = document.createElement('div');
   root.setAttribute('id', id);
   document.body.appendChild(root);
+
+  return root;
 };
 
-_makeRootElement({ id: 'root' });
-
 document.addEventListener('DOMContentLoaded', () => {
-  const { width, height } = document.body.getBoundingClientRect();
-
-  const app = new App({
-    width,
-    height,
-  });
-
-  render(app, document.querySelector('#root'));
+  const el = _makeRootElement({ id: 'game' });
+  renderGame(el);
 });
