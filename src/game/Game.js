@@ -20,13 +20,12 @@ export default class App {
   }
 
   onClick = (e) => {
+    const { ctx } = this;
+    const size = 22;
     const x = e.clientX;
     const y = e.clientY;
 
-    console.log('clicked', { x, y, event: e });
-
-    const { ctx } = this;
-    const size = 22;
+    console.info('clicked', { x, y, event: e });
 
     ctx.beginPath(); // Necessary to keep circles from connecting
     ctx.strokeStyle = 'tan';
